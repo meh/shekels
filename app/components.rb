@@ -5,7 +5,7 @@ require 'component/header'
 require 'component/input'
 require 'component/page'
 
-require 'component/table'
+require 'component/payments_table'
 
 module Component
 	Lissio = Lissio::Component

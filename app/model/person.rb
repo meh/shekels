@@ -3,11 +3,11 @@ class Person < Lissio::Model
 
 	property :name, primary: true
 
-	def debts
-		Payments.for(name, kind: :debt)
+	def debts(&block)
+		Payments.fetch(name: name, sign: :-, &block)
 	end
 
-	def credits
-		Payments.for(name, kind: :credit)
+	def credits(&block)
+		Payments.fetch(name: name, sign: :+, &block)
 	end
 end

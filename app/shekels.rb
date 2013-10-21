@@ -26,7 +26,8 @@ class Shekels < Lissio::Application
 			@page.render
 		end
 
-		Payment.new(for: Person.new(name: "Richard"), amount: 13.37).create
+		Person.new(name: "Richard").create
+		Payment.new(id: 1, for: Person.new(name: "Richard"), amount: 13.37, sign: :-).create
 	end
 
 	html do
@@ -46,6 +47,12 @@ class Shekels < Lissio::Application
 			font size: 22.px
 
 			text align: :center
+		end
+
+		rule 'a' do
+			font weight: :bold
+			color '#222'
+			text decoration: :none
 		end
 	end
 end

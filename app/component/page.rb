@@ -10,20 +10,16 @@ class Page < Lissio::Component
 				elsif payments.empty?
 					render Lissio::Alert.new "No payments."
 				else
-					render Table.new(self) {
-						columns :amount, :recipient, :action
-
-						rows(*payments.map {|payment|
-							{ recipient: payment.for.name,
-							  amount:    payment.amount }
-						})
-					}
+					render PaymentsTable.new(self, payments)
 				end
 			}
 
 		when :person
+			render Lissio::Alert.new "No payments."
 
 		when :item
+			render Lissio::Alert.new "No payments."
+
 		end
 	end
 
