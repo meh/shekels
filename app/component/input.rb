@@ -9,16 +9,31 @@ class Input < Lissio::Component
 		words = e.target.value.split(/\s+/)
 		first = words.first.downcase
 
-		if first =~ NUMBER
+		case
+		when first =~ NUMBER
 
-		elsif first == :for
+		when first == :for
 
-		elsif first == :to
+		when first == :to
 
-		elsif first == :from
+		when first == :from
 
 		else
-			Shekels.navigate("/#{words.join(' ')}")
+			name = words.join(' ')
+
+			Payments.fetch(name: name) {|p|
+				if Payments === p && !p.empty?
+					p = p.first
+
+					if Person === p.for
+						Shekels.navigate("/person/#{words.join(' ')}")
+					else
+						Shekels.navigate("/item/#{words.join(' ')}")
+					end
+				else
+					Shekels.page.render Lissio::Alert::Danger.new("Unknown recipient.")
+				end
+			}
 		end
 	end
 

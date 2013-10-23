@@ -54,6 +54,8 @@ class PaymentsTable < Lissio::Component
 				rule 'td' do
 					border 1.px, :solid, '#555'
 
+					white space: :nowrap
+
 					rule '&.amount', '&.date' do
 						padding 0, 5.px
 					end
