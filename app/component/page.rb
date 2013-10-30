@@ -6,19 +6,41 @@ class Page < Lissio::Component
 		when :index
 			Payments.fetch {|payments|
 				if not Payments === payments
-					render Lissio::Alert::Danger.new "Failed to load payments."
+					render Danger.new "Failed to load payments."
 				elsif payments.empty?
-					render Lissio::Alert.new "No payments."
+					render Info.new "No payments."
 				else
-					render PaymentsTable.new(self, payments)
+					render PaymentList.new(self, payments)
 				end
 			}
 
 		when :person
-			render Lissio::Alert.new "No payments."
+			Payments.fetch(name: data) {|payments|
+				if not Payments === payments
+					render Danger.new "Failed to load payments."
+				else
+					shekels = payments.map {|p|
+						amount = p.amount
+
+						if p.sign == :-
+							amount = -amount
+						end
+
+						amount
+					}.reduce(0, :+)
+
+					if shekels == 0
+						render Info.new "Yours and #{data}'s shekels are at peace."
+					elsif shekels < 0
+						render Info.new! "You owe ₪ <span class='negative'>#{-shekels}</span> to #{data}."
+					else
+						render Info.new! "#{data} owes you ₪ <span class='positive'>#{shekels}</span>."
+					end
+				end
+			}
 
 		when :item
-			render Lissio::Alert.new "No payments."
+			render Info.new "No payments."
 
 		end
 	end
@@ -42,8 +64,8 @@ class Page < Lissio::Component
 
 	css do
 		rule '#page' do
-			width 500.px
-			margin 40.px, :auto
+			width 100.%
+			margin 20.px, :auto
 		end
 	end
 end

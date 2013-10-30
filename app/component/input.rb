@@ -1,22 +1,48 @@
 module Component
 
 class Input < Lissio::Component
-	NUMBER = /^\d+(\.\d+)$/
-
 	on :keydown, 'input' do |e|
-		next unless e.key == :Enter
+		next unless e.key == :Enter && !e.target.value.empty?
 
 		words = e.target.value.split(/\s+/)
 		first = words.first.downcase
 
-		case
-		when first =~ NUMBER
+		case first
+		when /^\d+(\.\d+)?$/
+			amount = words.shift.to_f
+			first  = words.shift
 
-		when first == :for
+			name, *rest = words.slice_before("for").to_a
+			name = name.join(' ')
+			rest = rest.flatten.drop(1).join(' ')
 
-		when first == :to
+			case first
+			when :for
+				Payment.new(for: words.join(' '), amount: amount, sign: :-).create {
+					Shekels.refresh
+				}
 
-		when first == :from
+			when :to
+				Person.new(name: name).create {
+					Payment.new(recipient: Person.new(name: name), for: (rest unless rest.empty?), amount: amount, sign: :-).create {
+						Shekels.refresh
+					}
+				}
+
+			when :from
+				Person.new(name: name).create {
+					Payment.new(recipient: Person.new(name: name), for: (rest unless rest.empty?), amount: amount, sign: :+).create {
+						Shekels.refresh
+					}
+				}
+
+			end
+
+		when :for
+
+		when :to
+
+		when :from
 
 		else
 			name = words.join(' ')
@@ -25,16 +51,18 @@ class Input < Lissio::Component
 				if Payments === p && !p.empty?
 					p = p.first
 
-					if Person === p.for
+					if Person === p.recipient
 						Shekels.navigate("/person/#{words.join(' ')}")
 					else
 						Shekels.navigate("/item/#{words.join(' ')}")
 					end
 				else
-					Shekels.page.render Lissio::Alert::Danger.new("Unknown recipient.")
+					Shekels.page.render Danger.new("Unknown recipient.")
 				end
 			}
 		end
+
+		e.target.clear
 	end
 
 	element '#input'
@@ -53,9 +81,9 @@ class Input < Lissio::Component
 				border right: :none
 
 				padding left: 4.px,
-					      right: 4.px,
-					      top: 3.px,
-					      bottom: 3.px
+				        right: 4.px,
+				        top: 3.px,
+				        bottom: 3.px
 			end
 
 			rule 'input' do

@@ -4,7 +4,8 @@ class Payment < Lissio::Model
 	end
 
 	property :id, as: Integer, primary: true
-	property :for
+	property :recipient, as: Person
+	property :for, as: String
 	property :at, as: Time, default: -> { Time.now }
 	property :amount, as: Float
 	property :sign, as: Symbol

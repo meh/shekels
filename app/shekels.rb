@@ -1,5 +1,6 @@
 class Shekels < Lissio::Application
 	expose :@page
+	expose :refresh
 
 	def initialize
 		super
@@ -25,9 +26,10 @@ class Shekels < Lissio::Application
 			@input.render
 			@page.render
 		end
+	end
 
-		Person.new(name: "Richard").create
-		Payment.new(id: 1, for: Person.new(name: "Richard"), amount: 13.37, sign: :-).create
+	def refresh
+		@router.update
 	end
 
 	html do
@@ -53,6 +55,14 @@ class Shekels < Lissio::Application
 			font weight: :bold
 			color '#222'
 			text decoration: :none
+		end
+
+		rule '.negative' do
+			color '#b94a48'
+		end
+
+		rule '.positive' do
+			color '#468847'
 		end
 	end
 end
