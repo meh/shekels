@@ -36,6 +36,10 @@ class Shekels < Lissio::Application
 		div.header!
 		div.input!
 		div.page!
+
+		div.github! do
+			'<a href="https://github.com/meh/shekels"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>'
+		end
 	end
 
 	css do
