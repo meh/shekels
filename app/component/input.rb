@@ -2,7 +2,12 @@ module Component
 
 class Input < Lissio::Component
 	on :keydown, 'input' do |e|
-		next unless e.key == :Enter && !e.target.value.empty?
+		next unless e.key == :Enter
+
+		if e.target.value.empty?
+			Shekels.navigate('/')
+			next
+		end
 
 		words = e.target.value.split(/\s+/)
 		first = words.first.downcase
