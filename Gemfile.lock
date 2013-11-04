@@ -1,19 +1,6 @@
 GIT
-  remote: git://github.com/opal/opal-sprockets.git
-  revision: e1cdd7325faa62444a7b6aa3d83753cc999265d7
-  specs:
-    opal-sprockets (0.2.1)
-      opal (~> 0.4.4)
-      sprockets
-
-PATH
-  remote: /home/meh/projects/opal/browser
-  specs:
-    opal-browser (0.1.0)
-      opal (>= 0.4.3)
-
-PATH
-  remote: /home/meh/projects/opal/lissio
+  remote: git://github.com/meh/lissio.git
+  revision: 643d8b36017659b03c15afb271840f516323c779
   specs:
     lissio (0.1.0)
       opal (>= 0.4.1)
@@ -21,10 +8,18 @@ PATH
       opal-sprockets
       rack
 
-PATH
-  remote: /home/meh/projects/opal/opal
+GIT
+  remote: git://github.com/opal/opal-browser.git
+  revision: 28ead6c9b7ee8869667e3601ae7e43cdbe59b968
   specs:
-    opal (0.4.4)
+    opal-browser (0.1.0)
+      opal (>= 0.4.3)
+
+GIT
+  remote: git://github.com/opal/opal.git
+  revision: 69873e0374b04e1aa45aa2d5f2459dbc5b239d4f
+  specs:
+    opal (0.5.0)
       source_map
 
 GEM
@@ -33,8 +28,10 @@ GEM
     hike (1.2.3)
     json (1.8.1)
     multi_json (1.8.2)
+    opal-sprockets (0.3.0)
+      opal (~> 0.5.0)
+      sprockets
     rack (1.5.2)
-    sass (3.2.12)
     source_map (3.0.1)
       json
     sprockets (2.10.0)
@@ -42,9 +39,6 @@ GEM
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    sprockets-sass (1.0.2)
-      sprockets (~> 2.0)
-      tilt (~> 1.1)
     tilt (1.4.1)
 
 PLATFORMS
@@ -54,7 +48,3 @@ DEPENDENCIES
   lissio!
   opal!
   opal-browser!
-  opal-sprockets!
-  sass
-  sprockets
-  sprockets-sass
