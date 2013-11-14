@@ -10,16 +10,24 @@ GIT
 
 GIT
   remote: git://github.com/opal/opal-browser.git
-  revision: 28ead6c9b7ee8869667e3601ae7e43cdbe59b968
+  revision: c3f2d4c5da04fa6266e0404d15712e00021270ad
   specs:
     opal-browser (0.1.0)
       opal (>= 0.4.3)
 
 GIT
-  remote: git://github.com/opal/opal.git
-  revision: 69873e0374b04e1aa45aa2d5f2459dbc5b239d4f
+  remote: git://github.com/opal/opal-sprockets.git
+  revision: 98be337ebf6ecf42ecbbcda3380774d21f6e6ad8
   specs:
-    opal (0.5.0)
+    opal-sprockets (0.3.0)
+      opal (~> 0.5.0)
+      sprockets
+
+GIT
+  remote: git://github.com/opal/opal.git
+  revision: 9549255e763443397f82030afccfe084e9557d51
+  specs:
+    opal (0.5.2)
       source_map
 
 GEM
@@ -28,9 +36,6 @@ GEM
     hike (1.2.3)
     json (1.8.1)
     multi_json (1.8.2)
-    opal-sprockets (0.3.0)
-      opal (~> 0.5.0)
-      sprockets
     rack (1.5.2)
     source_map (3.0.1)
       json
@@ -48,3 +53,4 @@ DEPENDENCIES
   lissio!
   opal!
   opal-browser!
+  opal-sprockets!
