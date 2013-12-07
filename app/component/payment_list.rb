@@ -31,7 +31,7 @@ class PaymentList < Lissio::Component
 
 	tag name: :div, class: 'payment-list'
 
-	html do |d|
+	html do |_|
 		previous = nil
 
 		@payments.sort_by(&:at).reverse.each do |payment|
@@ -43,85 +43,85 @@ class PaymentList < Lissio::Component
 					first = current
 					last  = first + (6 * 24 * 60 * 60)
 
-					d.div.week do
-						d.span.start first.strftime('%F')
-						d.span.separator '..'
-						d.span.end last.strftime('%F')
+					_.div.week do
+						_.span.start first.strftime('%F')
+						_.span.separator '..'
+						_.span.end last.strftime('%F')
 					end
 				end
 			else
 				first = payment.at - ((payment.at.wday - 1) * 24 * 60 * 60)
 				last  = first + (6 * 24 * 60 * 60)
 
-				d.div.week do
-					d.span.start first.strftime('%F')
-					d.span.separator '..'
-					d.span.end last.strftime('%F')
+				_.div.week do
+					_.span.start first.strftime('%F')
+					_.span.separator '..'
+					_.span.end last.strftime('%F')
 				end
 			end
 
 			previous = payment
 
-			d.div do
+			_.div do
 				if payment.recipient
 					if payment.sign == :-
-						d.span "You owe"
+						_.span "You owe"
 
-						d.span.remover.text(" ₪ ").on :click do |e|
+						_.span.remover.text(" ₪ ").on :click do |e|
 							remove(payment, e.target)
 						end
 
-						d.span.negative payment.amount.to_s
-						d.span " to "
-						d.a.href("/person/#{payment.recipient.name}").text(payment.recipient.name).
+						_.span.negative payment.amount.to_s
+						_.span " to "
+						_.a.href("/person/#{payment.recipient.name}").text(payment.recipient.name).
 							on :click do |e|
 								e.stop!; Shekels.navigate(e.target[:href])
 							end
 
 						if payment.for
-							d.span " for "
-							d.span payment.for
+							_.span " for "
+							_.span payment.for
 						end
 
-						d.span " on "
-						d.span payment.at.strftime('%A')
+						_.span " on "
+						_.span payment.at.strftime('%A')
 					else
-						d.a.href("/person/#{payment.recipient.name}").text(payment.recipient.name).
+						_.a.href("/person/#{payment.recipient.name}").text(payment.recipient.name).
 							on :click do |e|
 								e.stop!; Shekels.navigate(e.target[:href])
 							end
-						d.span " owes you"
+						_.span " owes you"
 
-						d.span.remover.text(" ₪ ").on :click do |e|
+						_.span.remover.text(" ₪ ").on :click do |e|
 							remove(payment, e.target)
 						end
 
-						d.span.positive payment.amount.to_s
+						_.span.positive payment.amount.to_s
 
 						if payment.for
-							d.span " for "
-							d.span payment.for
+							_.span " for "
+							_.span payment.for
 						end
 
-						d.span " on "
-						d.span payment.at.strftime('%A')
+						_.span " on "
+						_.span payment.at.strftime('%A')
 					end
 				else
-					d.span "You spent"
+					_.span "You spent"
 
-					d.span.remover.text(" ₪ ").on :click do |e|
+					_.span.remover.text(" ₪ ").on :click do |e|
 						remove(payment, e.target)
 					end
 
-					d.span.negative payment.amount.to_s
+					_.span.negative payment.amount.to_s
 
 					if payment.for
-						d.span " for "
-						d.span payment.for
+						_.span " for "
+						_.span payment.for
 					end
 
-					d.span " on "
-					d.span payment.at.strftime('%A')
+					_.span " on "
+					_.span payment.at.strftime('%A')
 				end
 			end
 		end
