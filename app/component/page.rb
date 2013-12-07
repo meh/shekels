@@ -1,6 +1,8 @@
+require 'lissio/component/container'
+
 module Component
 
-class Page < Lissio::Component
+class Page < Lissio::Component::Container
 	def go(page, data = nil)
 		case page
 		when :index
@@ -43,21 +45,6 @@ class Page < Lissio::Component
 			render Info.new "No payments."
 
 		end
-	end
-
-	def render(*content)
-		content = [*@content] if content.empty?
-		content.compact! # FIXME: when it's fixed
-
-		element.clear
-
-		content.each {|c|
-			if String === c
-				element << c
-			else
-				element << (c.render; c.element)
-			end
-		}
 	end
 
 	element '#page'
