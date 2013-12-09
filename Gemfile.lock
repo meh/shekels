@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/meh/lissio.git
-  revision: 643d8b36017659b03c15afb271840f516323c779
+  revision: e8a141e1b421a34aeb4b082eec29114a9cf3da4b
   specs:
     lissio (0.1.0)
       opal (>= 0.4.1)
@@ -10,25 +10,18 @@ GIT
 
 GIT
   remote: git://github.com/opal/opal-browser.git
-  revision: c3f2d4c5da04fa6266e0404d15712e00021270ad
+  revision: a1baca0a737ebb32b427b6e4c32b3746051d361e
   specs:
     opal-browser (0.1.0)
       opal (>= 0.4.3)
 
 GIT
-  remote: git://github.com/opal/opal-sprockets.git
-  revision: 98be337ebf6ecf42ecbbcda3380774d21f6e6ad8
-  specs:
-    opal-sprockets (0.3.0)
-      opal (~> 0.5.0)
-      sprockets
-
-GIT
   remote: git://github.com/opal/opal.git
-  revision: 9549255e763443397f82030afccfe084e9557d51
+  revision: 505176f18df7c40d0259d89815e7ead495b3f486
   specs:
-    opal (0.5.2)
+    opal (0.6.0)
       source_map
+      sprockets
 
 GEM
   remote: http://rubygems.org/
@@ -36,10 +29,12 @@ GEM
     hike (1.2.3)
     json (1.8.1)
     multi_json (1.8.2)
+    opal-sprockets (0.0.1)
+      sprockets
     rack (1.5.2)
     source_map (3.0.1)
       json
-    sprockets (2.10.0)
+    sprockets (2.10.1)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
@@ -53,4 +48,3 @@ DEPENDENCIES
   lissio!
   opal!
   opal-browser!
-  opal-sprockets!
