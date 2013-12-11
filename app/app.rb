@@ -1,6 +1,7 @@
 require 'json2'
 require 'sizzle'
 require 'opal'
+require 'time'
 
 require 'browser'
 require 'browser/effects'
