@@ -70,18 +70,15 @@ class PaymentList < Lissio::Component
 	module Payment
 		module Person
 			class Positive < Lissio::Component::Container
-				def initialize(parent, payment)
-					super(parent)
+				def render(payment)
+					payments = parent
 
-					render do
-						a.href("/person/#{payment.recipient.name}").text(payment.recipient.name).
-							on :click do |e|
-								e.stop!; Shekels.navigate(e.target[:href])
-							end
+					super() do
+						a.href("/person/#{payment.recipient!}").text(payment.recipient!)
 						span " owes you"
 
 						span.remover.text(" ₪ ").on :click do |e|
-							remove(payment, e.target)
+							payments.remove(payment, e.target)
 						end
 
 						span.positive payment.amount.to_s
@@ -98,22 +95,19 @@ class PaymentList < Lissio::Component
 			end
 
 			class Negative < Lissio::Component::Container
-				def initialize(parent, payment)
-					super(parent)
+				def render(payment)
+					payments = parent
 
-					render do
+					super() do
 						span "You owe"
 
-						span.remover.text(" ₪ ").on :click do |e|
-							remove(payment, e.target)
+						span.remover(" ₪ ").on :click do |e|
+							payments.remove(payment, e.target)
 						end
 
-						span.negative payment.amount.to_s
+						span.negative payment.amount
 						span " to "
-						a.href("/person/#{payment.recipient.name}").text(payment.recipient.name).
-							on :click do |e|
-								e.stop!; Shekels.navigate(e.target[:href])
-							end
+						a.href("/person/#{payment.recipient!}").text(payment.recipient!)
 
 						if payment.for
 							span " for "
@@ -128,14 +122,14 @@ class PaymentList < Lissio::Component
 		end
 
 		class Item < Lissio::Component::Container
-			def initialize(parent, payment)
-				super(parent)
+			def render(payment)
+				payments = parent
 
-				render do
+				super() do
 					span "You spent"
 
 					span.remover.text(" ₪ ").on :click do |e|
-						parent.remove(payment, e.target)
+						payments.remove(payment, e.target)
 					end
 
 					span.negative payment.amount.to_s
@@ -192,16 +186,18 @@ class PaymentList < Lissio::Component
 				element << week.element
 			end
 
-			if payment.recipient
+			if payment.recipient!
 				if payment.sign == :-
-					element << Payment::Person::Negative.new(self, payment).element
+					element << Payment::Person::Negative.new(self).render(payment)
 				else
-					element << Payment::Person::Positive.new(self, payment).element
+					element << Payment::Person::Positive.new(self).render(payment)
 				end
 			else
-				element << Payment::Item.new(self, payment).element
+				element << Payment::Item.new(self).render(payment)
 			end
 		}
+
+		super
 	end
 
 	tag name: :div, class: 'payment-list'

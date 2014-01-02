@@ -23,22 +23,22 @@ class Input < Lissio::Component
 
 			case first
 			when :for
-				Payment.new(for: words.join(' '), amount: amount, sign: :-).create {
+				Payment.new(for: words.join(' '), amount: amount, sign: :-).create.then {
 					Shekels.refresh
 				}
 
 			when :to
-				Person.new(name: name).create {
-					Payment.new(recipient: Person.new(name: name), for: (rest unless rest.empty?), amount: amount, sign: :-).create {
-						Shekels.refresh
-					}
+				Person.new(name: name).create.always {
+					Payment.new(recipient: name, for: (rest unless rest.empty?), amount: amount, sign: :-).create
+				}.then {
+					Shekels.refresh
 				}
 
 			when :from
-				Person.new(name: name).create {
-					Payment.new(recipient: Person.new(name: name), for: (rest unless rest.empty?), amount: amount, sign: :+).create {
-						Shekels.refresh
-					}
+				Person.new(name: name).create.always {
+					Payment.new(recipient: name, for: (rest unless rest.empty?), amount: amount, sign: :+).create
+				}.then {
+					Shekels.refresh
 				}
 
 			end
@@ -52,18 +52,18 @@ class Input < Lissio::Component
 		else
 			name = words.join(' ')
 
-			Payments.fetch(name: name) {|p|
-				if Payments === p && !p.empty?
-					p = p.first
-
-					if Person === p.recipient
-						Shekels.navigate("/person/#{words.join(' ')}")
-					else
-						Shekels.navigate("/item/#{words.join(' ')}")
-					end
-				else
-					Shekels.page.render Danger.new("Unknown recipient.")
+			Payments.fetch(name: name).then {|p|
+				if p.empty?
+					next Promise.error(:empty)
 				end
+
+				if p.recipient!
+					Shekels.navigate("/person/#{words.join(' ')}")
+				else
+					Shekels.navigate("/item/#{words.join(' ')}")
+				end
+			}.rescue {
+				Shekels.page.render Danger.new("Unknown recipient.")
 			}
 		end
 

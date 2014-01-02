@@ -5,6 +5,8 @@ class Shekels < Lissio::Application
 	def initialize
 		super
 
+		router.fragment!
+
 		route '/' do
 			@page.go :index
 		end

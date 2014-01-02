@@ -4,7 +4,7 @@ class Payments < Lissio::Collection
 	adapter Lissio::Adapter::Storage do
 		filter do |value, desc|
 			if desc
-				if desc[:name] && !value.recipient || value.recipient.name != desc[:name]
+				if desc[:name] && value.recipient! != desc[:name]
 					next false
 				end
 
