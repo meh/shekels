@@ -13,19 +13,17 @@ class Header < Lissio::Component
 	end
 
 	css do
-		rule '#header' do
-			cursor :default
+		cursor :default
 
-			margin top: 20.px,
-			       bottom: 20.px
+		margin top: 20.px,
+			     bottom: 20.px
 
-			rule '.title' do
-				font size: 60.px
-			end
+		rule '.title' do
+			font size: 60.px
+		end
 
-			rule '.subtitle' do
-				font size: 24.px
-			end
+		rule '.subtitle' do
+			font size: 24.px
 		end
 	end
 end

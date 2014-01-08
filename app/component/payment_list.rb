@@ -203,15 +203,13 @@ class PaymentList < Lissio::Component
 	tag name: :div, class: 'payment-list'
 
 	css do
-		rule '.payment-list' do
-			width 100.%
+		width 100.%
 
-			rule 'div' do
-				line height: 1.5.em
+		rule 'div' do
+			line height: 1.5.em
 
-				rule '.remover' do
-					cursor :crosshair
-				end
+			rule '.remover' do
+				cursor :crosshair
 			end
 		end
 	end

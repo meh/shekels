@@ -45,17 +45,15 @@ class Shekels < Lissio::Application
 	end
 
 	css do
-		rule 'body' do
-			width 100.%
-			height 100.%
+		width 100.%
+		height 100.%
 
-			background '#fff'
-			color '#222'
-			font family: 'Quicksand'
-			font size: 22.px
+		background '#fff'
+		color '#222'
+		font family: 'Quicksand'
+		font size: 22.px
 
-			text align: :center
-		end
+		text align: :center
 
 		rule 'a' do
 			font weight: :bold

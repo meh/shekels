@@ -49,10 +49,8 @@ class Page < Lissio::Component::Container
 	element '#page'
 
 	css do
-		rule '#page' do
-			width 100.%
-			margin 20.px, :auto
-		end
+		width 100.%
+		margin 20.px, :auto
 	end
 end
 

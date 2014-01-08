@@ -78,31 +78,29 @@ class Input < Lissio::Component
 	end
 
 	css do
-		rule '#input' do
-			rule '.shekel' do
-				display 'inline-block'
+		rule '.shekel' do
+			display 'inline-block'
 
-				border 1.px, :solid, '#555'
-				border right: :none
+			border 1.px, :solid, '#555'
+			border right: :none
 
-				padding left: 4.px,
-				        right: 4.px,
-				        top: 3.px,
-				        bottom: 3.px
-			end
+			padding left: 4.px,
+				      right: 4.px,
+				      top: 3.px,
+				      bottom: 3.px
+		end
 
-			rule 'input' do
-				display 'inline-block'
+		rule 'input' do
+			display 'inline-block'
 
-				background '#fff'
-				color '#222'
+			background '#fff'
+			color '#222'
 
-				border 1.px, :solid, '#555'
-				border left: :none
+			border 1.px, :solid, '#555'
+			border left: :none
 
-				padding 3.px
-				width 32.ch
-			end
+			padding 3.px
+			width 32.ch
 		end
 	end
 end
